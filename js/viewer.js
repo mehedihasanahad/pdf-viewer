@@ -1,5 +1,6 @@
 "use strict";
 import CONFIG from './config.js';
+import helperScript from './modules/helper.js';
 
 (() => {
   var __webpack_modules__ = ([,
@@ -424,7 +425,7 @@ import CONFIG from './config.js';
           if (appConfig.annotationEditorParams) {
             if (annotationEditorMode !== _pdfjsLib.AnnotationEditorType.DISABLE) {
               if (_app_options.AppOptions.get("enableStampEditor") && isOffscreenCanvasSupported) {
-                appConfig.toolbar?.editorStampButton?.classList.remove("hidden");
+                appConfig.toolbar?.editorStampButton?.classList?.remove("hidden");
               }
               this.annotationEditorParams = new _webAnnotation_editor_params.AnnotationEditorParams(appConfig.annotationEditorParams, eventBus);
             } else {
@@ -3834,14 +3835,36 @@ import CONFIG from './config.js';
           editorFreeTextFontSize.addEventListener("input", function () {
             dispatchEvent("FREETEXT_SIZE", this.valueAsNumber);
           });
-          editorFreeTextColor.addEventListener("input", function () {
-            dispatchEvent("FREETEXT_COLOR", this.value);
+          // editorFreeTextColor.addEventListener("input", function () {
+          //   dispatchEvent("FREETEXT_COLOR", this.value);
+          // });
+          colorsElementText.addEventListener("click", function (event) {
+            const currentTarget = event.target;
+            if (currentTarget.getAttribute("data-value")) {
+              const currentTargetValue = currentTarget.getAttribute("data-value");
+              const colors = document.querySelectorAll("#colorsElementText div");
+              helperScript.setActive(colors, currentTarget, "activeColor");
+              dispatchEvent("FREETEXT_COLOR", currentTargetValue);
+            }
           });
-          editorInkColor.addEventListener("input", function () {
-            dispatchEvent("INK_COLOR", this.value);
+          // editorInkColor.addEventListener("input", function () {
+          //   dispatchEvent("INK_COLOR", this.value);
+          // });
+          colorsElement.addEventListener("click", function (event) {
+            const currentTarget = event.target;
+            if (currentTarget.getAttribute("data-value")) {
+              const currentTargetValue = currentTarget.getAttribute("data-value");
+              const colors = document.querySelectorAll("#colorsElement div");
+              helperScript.setActive(colors, currentTarget, "activeColor");
+              dispatchEvent("INK_COLOR", currentTargetValue);
+            }
           });
-          editorInkThickness.addEventListener("input", function () {
-            dispatchEvent("INK_THICKNESS", this.valueAsNumber);
+          // editorInkThickness.addEventListener("input", function () {
+          //   dispatchEvent("INK_THICKNESS", this.valueAsNumber);
+          // });
+          editorInkThicknessLevel.addEventListener("change", function (event) {
+            const thiknessValue = this.querySelector('input[name="thikness"]:checked').value;
+            dispatchEvent("INK_THICKNESS", thiknessValue);
           });
           editorInkOpacity.addEventListener("input", function () {
             dispatchEvent("INK_OPACITY", this.valueAsNumber);
@@ -3856,16 +3879,16 @@ import CONFIG from './config.js';
                   editorFreeTextFontSize.value = value;
                   break;
                 case _pdfjsLib.AnnotationEditorParamsType.FREETEXT_COLOR:
-                  editorFreeTextColor.value = value;
+                  // editorFreeTextColor.value = value;
                   break;
                 case _pdfjsLib.AnnotationEditorParamsType.INK_COLOR:
-                  editorInkColor.value = value;
+                  // editorInkColor.value = value;
                   break;
                 case _pdfjsLib.AnnotationEditorParamsType.INK_THICKNESS:
-                  editorInkThickness.value = value;
+                  // editorInkThickness.value = value;
                   break;
                 case _pdfjsLib.AnnotationEditorParamsType.INK_OPACITY:
-                  editorInkOpacity.value = value;
+                  editorInkOpacity.value = 50;
                   break;
               }
             }
@@ -11931,18 +11954,20 @@ import CONFIG from './config.js';
                 return classList.contains("toggled") ? _pdfjsLib.AnnotationEditorType.NONE : _pdfjsLib.AnnotationEditorType.INK;
               }
             }
-          }, {
-            element: options.editorStampButton,
-            eventName: "switchannotationeditormode",
-            eventDetails: {
-              get mode() {
-                const {
-                  classList
-                } = options.editorStampButton;
-                return classList.contains("toggled") ? _pdfjsLib.AnnotationEditorType.NONE : _pdfjsLib.AnnotationEditorType.STAMP;
-              }
-            }
-          }];
+          }, 
+          // {
+          //   element: options.editorStampButton,
+          //   eventName: "switchannotationeditormode",
+          //   eventDetails: {
+          //     get mode() {
+          //       const {
+          //         classList
+          //       } = options.editorStampButton;
+          //       return classList.contains("toggled") ? _pdfjsLib.AnnotationEditorType.NONE : _pdfjsLib.AnnotationEditorType.STAMP;
+          //     }
+          //   }
+          // }
+        ];
           this.buttons.push({
             element: options.openFile,
             eventName: "openfile"
@@ -12053,11 +12078,11 @@ import CONFIG from './config.js';
           }) => {
             (0, _ui_utils.toggleCheckedBtn)(editorFreeTextButton, mode === _pdfjsLib.AnnotationEditorType.FREETEXT, editorFreeTextParamsToolbar);
             (0, _ui_utils.toggleCheckedBtn)(editorInkButton, mode === _pdfjsLib.AnnotationEditorType.INK, editorInkParamsToolbar);
-            (0, _ui_utils.toggleCheckedBtn)(editorStampButton, mode === _pdfjsLib.AnnotationEditorType.STAMP, editorStampParamsToolbar);
+            // (0, _ui_utils.toggleCheckedBtn)(editorStampButton, mode === _pdfjsLib.AnnotationEditorType.STAMP, editorStampParamsToolbar);
             const isDisable = mode === _pdfjsLib.AnnotationEditorType.DISABLE;
             editorFreeTextButton.disabled = isDisable;
             editorInkButton.disabled = isDisable;
-            editorStampButton.disabled = isDisable;
+            // editorStampButton.disabled = isDisable;
           };
           this.eventBus._on("annotationeditormodechanged", editorModeChanged);
           this.eventBus._on("toolbarreset", evt => {
@@ -13655,7 +13680,8 @@ import CONFIG from './config.js';
             editorFreeTextParamsToolbar: document.getElementById("editorFreeTextParamsToolbar"),
             editorInkButton: document.getElementById("editorInk"),
             editorInkParamsToolbar: document.getElementById("editorInkParamsToolbar"),
-            editorStampButton: document.getElementById("editorStamp"),
+            // editorStampButton: document.getElementById("editorStamp"),
+            editorStampButton: '',
             editorStampParamsToolbar: document.getElementById("editorStampParamsToolbar"),
             download: document.getElementById("download")
           },
@@ -13740,9 +13766,12 @@ import CONFIG from './config.js';
           },
           annotationEditorParams: {
             editorFreeTextFontSize: document.getElementById("editorFreeTextFontSize"),
-            editorFreeTextColor: document.getElementById("editorFreeTextColor"),
-            editorInkColor: document.getElementById("editorInkColor"),
-            editorInkThickness: document.getElementById("editorInkThickness"),
+            // editorFreeTextColor: document.getElementById("editorFreeTextColor"),
+            colorsElementText: document.getElementById("colorsElementText"),
+            // editorInkColor: document.getElementById("editorInkColor"),
+            colorsElement: document.getElementsByClassName("colorsElement"),
+            // editorInkThickness: document.getElementById("editorInkThickness"),
+            editorInkThicknessLevel: document.getElementById("editorInkThicknessLevel"),
             editorInkOpacity: document.getElementById("editorInkOpacity"),
             editorStampAddImage: document.getElementById("editorStampAddImage")
           },

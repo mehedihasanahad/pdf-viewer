@@ -15,6 +15,25 @@
       href="/locale/locale.properties"
     />
     <link rel="stylesheet" href="./viewer.css" />
+    <style>
+      .circle {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+      }
+      .yellow {
+        background-color: yellow;
+      }
+      .red {
+        background-color: red;
+      }
+      .black {
+        background-color: black;
+      }
+      .activeColor {
+        outline: 2px solid dodgerblue;
+      }
+    </style>
   </head>
 
   <body tabindex="1">
@@ -216,12 +235,20 @@
                 data-l10n-id="editor_free_text_color"
                 >Color</label
               >
-              <input
+              <!-- <input
                 type="color"
                 id="editorFreeTextColor"
                 class="editorParamsColor"
                 tabindex="100"
-              />
+              /> -->
+              <div id="colorsElementText" style="display: flex; column-gap: 10px">
+                <div class="circle yellow" data-value="#FFFF00"></div>
+                <div class="circle red" data-value="#FF0000"></div>
+                <div
+                  class="circle black activeColor"
+                  data-value="#000000"
+                ></div>
+              </div>
             </div>
             <div class="editorParamsSetter">
               <label
@@ -256,12 +283,21 @@
                 data-l10n-id="editor_ink_color"
                 >Color</label
               >
-              <input
+              <!-- <input
                 type="color"
                 id="editorInkColor"
                 class="editorParamsColor"
                 tabindex="102"
-              />
+              /> -->
+
+              <div id="colorsElement" style="display: flex; column-gap: 10px">
+                <div class="circle yellow" data-value="#FFFF00"></div>
+                <div class="circle red" data-value="#FF0000"></div>
+                <div
+                  class="circle black activeColor"
+                  data-value="#000000"
+                ></div>
+              </div>
             </div>
             <div class="editorParamsSetter">
               <label
@@ -270,7 +306,7 @@
                 data-l10n-id="editor_ink_thickness"
                 >Thickness</label
               >
-              <input
+              <!-- <input
                 type="range"
                 id="editorInkThickness"
                 class="editorParamsSlider"
@@ -279,7 +315,27 @@
                 max="20"
                 step="1"
                 tabindex="103"
-              />
+              /> -->
+
+              <div
+                id="editorInkThicknessLevel"
+                style="display: flex; column-gap: 10px"
+              >
+                <div>
+                  <input
+                    type="radio"
+                    id="thin"
+                    value="1"
+                    name="thikness"
+                    checked
+                  />
+                  <label for="thin">Thin</label>
+                </div>
+                <div>
+                  <input type="radio" id="bold" value="15" name="thikness" />
+                  <label for="bold">Bold</label>
+                </div>
+              </div>
             </div>
             <div class="editorParamsSetter">
               <label
@@ -292,7 +348,7 @@
                 type="range"
                 id="editorInkOpacity"
                 class="editorParamsSlider"
-                value="100"
+                value="50"
                 min="1"
                 max="100"
                 step="1"
@@ -693,7 +749,7 @@
                   >
                     <span data-l10n-id="editor_ink2_label">Draw</span>
                   </button>
-                  <button
+                  <!-- <button
                     id="editorStamp"
                     class="toolbarButton hidden"
                     disabled="disabled"
@@ -707,7 +763,7 @@
                     <span data-l10n-id="editor_stamp1_label"
                       >Add or edit images</span
                     >
-                  </button>
+                  </button> -->
                 </div>
 
                 <div
@@ -1045,6 +1101,25 @@
     <script src="./js/pdfWorker.js"></script>
     <script src="./js/pdf.js"></script>
     <script type="module" src="./js/viewer.js"></script>
+    <script>
+      // function setActiveColor(event) {
+      //   const currentTarget = event.target;
+      //   if (currentTarget.getAttribute("data-value")) {
+      //     const currentTargetValue = currentTarget.getAttribute("data-value");
+      //     const colors = document.querySelectorAll("#colorsElement div");
+      //     setActive(colors, currentTarget);
+      //     document.getElementById("editorInkColor").value = currentTargetValue;
+      //   }
+      // }
+
+      // function setActive(elementCollection, currentElement) {
+      //   Array.prototype.forEach.call(elementCollection, (element) => {
+      //     if (currentElement.isEqualNode(element))
+      //       element.classList.add("active");
+      //     else element.classList.remove("active");
+      //   });
+      // }
+    </script>
     <!--Scripts-->
   </body>
 </html>
