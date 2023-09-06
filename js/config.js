@@ -1,3 +1,4 @@
 export default {
-  pdf: 'sample.pdf'  
+  pdf: 'sample.pdf',
+  defaultOpacity: 50
 }

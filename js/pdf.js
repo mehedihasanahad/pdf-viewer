@@ -19,6 +19,7 @@
  * @licend The above is the entire license notice for the
  * JavaScript code in this page
  */
+import CONFIG from './config.js';
 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -16434,7 +16435,7 @@ class InkEditor extends _editor.AnnotationEditor {
   #realHeight = 0;
   #requestFrameCallback = null;
   static _defaultColor = null;
-  static _defaultOpacity = 1;
+  static _defaultOpacity = CONFIG.defaultOpacity/ 100;
   static _defaultThickness = 1;
   static _l10nPromise;
   static _type = "ink";
@@ -16486,10 +16487,10 @@ class InkEditor extends _editor.AnnotationEditor {
     }
   }
   static get defaultPropertiesToUpdate() {
-    return [[_util.AnnotationEditorParamsType.INK_THICKNESS, InkEditor._defaultThickness], [_util.AnnotationEditorParamsType.INK_COLOR, InkEditor._defaultColor || _editor.AnnotationEditor._defaultLineColor], [_util.AnnotationEditorParamsType.INK_OPACITY, Math.round(InkEditor._defaultOpacity * 100)]];
+    return [[_util.AnnotationEditorParamsType.INK_THICKNESS, InkEditor._defaultThickness], [_util.AnnotationEditorParamsType.INK_COLOR, InkEditor._defaultColor || _editor.AnnotationEditor._defaultLineColor], [_util.AnnotationEditorParamsType.INK_OPACITY, Math.round(InkEditor._defaultOpacity * CONFIG.defaultOpacity)]];
   }
   get propertiesToUpdate() {
-    return [[_util.AnnotationEditorParamsType.INK_THICKNESS, this.thickness || InkEditor._defaultThickness], [_util.AnnotationEditorParamsType.INK_COLOR, this.color || InkEditor._defaultColor || _editor.AnnotationEditor._defaultLineColor], [_util.AnnotationEditorParamsType.INK_OPACITY, Math.round(100 * (this.opacity ?? InkEditor._defaultOpacity))]];
+    return [[_util.AnnotationEditorParamsType.INK_THICKNESS, this.thickness || InkEditor._defaultThickness], [_util.AnnotationEditorParamsType.INK_COLOR, this.color || InkEditor._defaultColor || _editor.AnnotationEditor._defaultLineColor], [_util.AnnotationEditorParamsType.INK_OPACITY, Math.round(CONFIG.defaultOpacity * (this.opacity ?? InkEditor._defaultOpacity))]];
   }
   #updateThickness(thickness) {
     const savedThickness = this.thickness;

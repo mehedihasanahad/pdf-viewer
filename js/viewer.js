@@ -3888,7 +3888,7 @@ import helperScript from './modules/helper.js';
                   // editorInkThickness.value = value;
                   break;
                 case _pdfjsLib.AnnotationEditorParamsType.INK_OPACITY:
-                  editorInkOpacity.value = 50;
+                  editorInkOpacity.value = value;
                   break;
               }
             }
